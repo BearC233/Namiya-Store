@@ -26,10 +26,17 @@ public class OpenApiConfig {
     }
 
     @Bean
-    public GroupedOpenApi publicApi() {
+    public GroupedOpenApi userApi() {
         return GroupedOpenApi.builder()
                 .group("user-api")
                 .pathsToMatch("/user/api/**")
+                .build();
+    }
+    @Bean
+    public GroupedOpenApi postApi() {
+        return GroupedOpenApi.builder()
+                .group("post-api")
+                .pathsToMatch("/post/api/**")
                 .build();
     }
 }
