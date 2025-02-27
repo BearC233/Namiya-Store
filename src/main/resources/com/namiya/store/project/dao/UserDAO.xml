@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.namiya.store.project.dao">
+<mapper namespace="com.namiya.store.project.dao.UserDAO">
 
     <resultMap id="userResultMap" type="com.namiya.store.project.dataobject.UserDO">
         <id column="user_id" property="userId"/>
@@ -72,6 +72,9 @@
 
     <select id="findByName" resultMap="userResultMap" parameterType="java.lang.String">
         select * from user where user_name=#{userName}
+    </select>
+    <select id="findByEmail" resultMap="userResultMap" parameterType="java.lang.String">
+        select * from user where user_email=#{userEmail}
     </select>
     <select id="findById" resultMap="userResultMap" parameterType="java.lang.String">
         select * from user where user_id=#{userId}

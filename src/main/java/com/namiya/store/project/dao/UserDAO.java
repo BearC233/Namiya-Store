@@ -20,5 +20,6 @@ public interface UserDAO {
     int count();
 
     UserDO findByName(String userName);
+    UserDO findByEmail(String userEmail);
     UserDO findById(String userId);
 }

@@ -48,4 +48,84 @@ public UserDO(User user){
     user.setGmtModified(this.gmtModified);
     return user;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserMedal() {
+        return userMedal;
+    }
+
+    public void setUserMedal(String userMedal) {
+        this.userMedal = userMedal;
+    }
+
+    public int getKindness() {
+        return kindness;
+    }
+
+    public void setKindness(int kindness) {
+        this.kindness = kindness;
+    }
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
+
+    public LocalDateTime getGmtCreated() {
+        return gmtCreated;
+    }
+
+    public void setGmtCreated(LocalDateTime gmtCreated) {
+        this.gmtCreated = gmtCreated;
+    }
+
+    public LocalDateTime getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(LocalDateTime gmtModified) {
+        this.gmtModified = gmtModified;
+    }
 }

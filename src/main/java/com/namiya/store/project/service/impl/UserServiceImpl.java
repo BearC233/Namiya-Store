@@ -5,12 +5,14 @@ import com.namiya.store.project.dataobject.UserDO;
 import com.namiya.store.project.model.Result;
 import com.namiya.store.project.model.User;
 import com.namiya.store.project.service.UserService;
+import com.namiya.store.project.utils.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -51,6 +53,85 @@ public class UserServiceImpl implements UserService {
         userDAO.update(new UserDO(user));//更新数据库和缓存
         redisTemplate.opsForValue().set("user"+userId,user);
         result.setData(user);
+        return result;
+    }
+
+    @Override
+    public Result<User> register(User user) {
+        Result<User> result=new Result<>();
+        UserDO userDO=new UserDO();
+        if(user.getUserName()==null){
+            if(user.getUserEmail()==null){
+                result.setSuccess(false);
+                result.setCode("403");
+                return result;
+            }
+            //邮箱注册
+            if(userDAO.findByEmail(user.getUserEmail())!=null){
+                result.setSuccess(false);
+                result.setCode("406");
+                result.setMessage("邮箱已注册");
+                return result;
+            }
+            userDO.setUserEmail(user.getUserEmail());
+            userDO.setUserId(UUIDGenerator.Generator(""));
+            userDO.setUserName("UU"+userDO.getUserId());
+        }
+        else{
+            //名称注册
+
+            if(userDAO.findByName(user.getUserName())!=null){
+                result.setSuccess(false);
+                result.setCode("406");
+                result.setMessage("用户名已注册");
+                return result;
+            }
+            userDO.setUserName(user.getUserName());
+            userDO.setUserId(UUIDGenerator.Generator(user.getUserName()));
+        }
+        if(user.getPwd()==null){
+            result.setSuccess(false);
+            result.setCode("404");
+            return result;
+        }
+        userDO.setPwd(user.getPwd());
+        int insert = userDAO.insert(userDO);
+        if(insert>0){
+            redisTemplate.opsForValue().set("user"+userDO.getUserId(),userDO.toModel());
+            result.setSuccess(true);
+            result.setData(userDO.toModel());
+            result.setMessage("注册成功");
+        }
+        else{
+            result.setCode("405");
+            result.setSuccess(false);
+
+        }
+        return result;
+
+    }
+
+    @Override
+    public Result<User> login(User user) {
+
+        Result<User> result=new Result<>();
+        UserDO userDO = userDAO.findByEmail(user.getUserEmail());
+        if(userDO ==null){
+            userDO = userDAO.findByName(user.getUserName());
+            if(userDO ==null){
+                result.setCode("401");
+                result.setSuccess(false);
+                return result;
+            }
+        }
+        if(!Objects.equals(userDO.getPwd(), user.getPwd())){
+            result.setSuccess(false);
+            result.setCode("407");
+            result.setMessage("密码或用户名不正确！");
+            return result;
+        }
+        result.setData(userDO.toModel());
+        result.setSuccess(true);
         return result;
     }
 }
