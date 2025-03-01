@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -133,5 +134,98 @@ public class UserServiceImpl implements UserService {
         result.setData(userDO.toModel());
         result.setSuccess(true);
         return result;
+    }
+
+    @Override
+    public Result<User> findById(String userId) {
+        Result<User> result = new Result<>();
+        UserDO byId = userDAO.findById(userId);
+        if (byId !=null) {
+            result.setSuccess(true);
+            result.setData(byId.toModel());
+            return result;
+        }
+        else{
+            result.setSuccess(false);
+            result.setCode("401");
+            return result;
+        }
+    }
+
+    @Override
+    public Result<User> findByName(String userName) {
+        Result<User> result = new Result<>();
+        UserDO byName = userDAO.findByName(userName);
+        if (byName !=null) {
+            result.setSuccess(true);
+            result.setData(byName.toModel());
+            return result;
+        }
+        else{
+            result.setSuccess(false);
+            result.setCode("401");
+            return result;
+        }
+    }
+
+    @Override
+    public Result<List<User>> getByName(String userName) {
+        Result<List<User>> result = new Result<>();
+        List<UserDO> byName = userDAO.getByName(userName);
+        if (!byName.isEmpty()) {
+            result.setSuccess(true);
+            result.setData(byName.stream().map(UserDO::toModel).toList());
+            return result;
+        }
+        else{
+            result.setSuccess(false);
+            result.setCode("401");
+            return result;
+        }
+    }
+
+    @Override
+    public int del(String userId) {
+        return userDAO.delete(userId);
+    }
+
+    @Override
+    public Result<List<User>> findAll() {
+       Result<List<User>> result = new Result<>();
+        List<UserDO> all = userDAO.findAll();
+        if(all.isEmpty()) {
+            result.setSuccess(false);
+            result.setCode("404");
+            result.setMessage("查询失败!请稍后再试");
+        }
+        List<User> list = all.stream().map(UserDO::toModel).toList();
+        result.setSuccess(true);
+        result.setData(list);
+        return result;
+    }
+
+    @Override
+    public Result<Integer> update(User user) {
+        Result<Integer> result=new Result<>();
+        if(user.getUserId()==null){
+            result.setSuccess(false);
+            result.setCode("401");
+            result.setMessage("无用户id!");
+            return result;
+        }
+        int update = userDAO.update(new UserDO(user));
+        if(update==0) {
+
+            result.setSuccess(false);
+            result.setMessage("更新失败!");
+            result.setCode("405");
+            return result;
+        }
+        else{
+            result.setData(update);
+            result.setSuccess(true);
+            result.setData(update);
+            return result;
+        }
     }
 }

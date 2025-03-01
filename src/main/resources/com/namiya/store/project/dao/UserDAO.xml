@@ -62,7 +62,7 @@
 
 
     <select id="findAll" resultMap="userResultMap">
-        select * from user
+        select * from user order by kindness
     </select>
 
     <select id="count" resultType="int">
@@ -72,6 +72,9 @@
 
     <select id="findByName" resultMap="userResultMap" parameterType="java.lang.String">
         select * from user where user_name=#{userName}
+    </select>
+    <select id="getByName" resultMap="userResultMap" parameterType="java.lang.String">
+        select * from user where user_name like concat('%',#{userName},'%') order by kindness
     </select>
     <select id="findByEmail" resultMap="userResultMap" parameterType="java.lang.String">
         select * from user where user_email=#{userEmail}

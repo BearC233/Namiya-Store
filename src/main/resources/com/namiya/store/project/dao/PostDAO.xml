@@ -65,10 +65,13 @@
 
 
     <select id="findByTitle" resultMap="postResultMap" parameterType="java.lang.String">
-        select * from post where post_title=#{postTitle}
+        select * from post where post_title like concat('%',#{postTitle},'%');
     </select>
-    <select id="findByEmail" resultMap="postResultMap" parameterType="java.lang.String">
+    <select id="findByUser" resultMap="postResultMap" parameterType="java.lang.String">
         select * from post where post_publisher=#{userId}
+    </select>
+    <select id="findById" resultMap="postResultMap" parameterType="java.lang.String">
+        select * from post where post_id=#{postId}
     </select>
 
 

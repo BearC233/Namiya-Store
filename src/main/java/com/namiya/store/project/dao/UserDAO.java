@@ -20,6 +20,7 @@ public interface UserDAO {
     int count();
 
     UserDO findByName(String userName);
+    List<UserDO> getByName(String userName);
     UserDO findByEmail(String userEmail);
     UserDO findById(String userId);
 }

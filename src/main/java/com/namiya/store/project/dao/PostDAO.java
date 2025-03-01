@@ -17,6 +17,7 @@ public interface PostDAO {
     int delete(@Param("postId") String postId);
 
 
-    PostDO findByTitle(String title);
+    List<PostDO> findByTitle(String title);
+    PostDO findById(String postId);
     List<PostDO> findByUser(String userId);
 }

@@ -18,10 +18,10 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("解忧杂货店项目API文档")
                         .version("1.0")
-                        .description("符合RESTful规范的接口设计示例")
+                        .description("RESTful风格的接口设计,前端提供model")
                         .contact(new Contact()
-                                .name("开发者支持")
-                                .email("support@example.com")));
+                                .name("熊C")
+                                .email("hanzhe_1230@163.com")));
 
     }
 
@@ -37,6 +37,13 @@ public class OpenApiConfig {
         return GroupedOpenApi.builder()
                 .group("post-api")
                 .pathsToMatch("/post/api/**")
+                .build();
+    }
+    @Bean
+    public GroupedOpenApi capsuleApi() {
+        return GroupedOpenApi.builder()
+                .group("capsule-api")
+                .pathsToMatch("/capsule/api/**")
                 .build();
     }
 }
