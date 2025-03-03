@@ -28,7 +28,7 @@ public class CommentServiceImpl implements CommentService {
         if(comment.getCommentContent()==null){
             result.setSuccess(false);
             result.setCode("101");
-            result.setCode("内容不可为空!");
+            result.setMessage("内容不可为空!");
             return result;
         }
 
@@ -43,7 +43,7 @@ public class CommentServiceImpl implements CommentService {
         else{
             result.setSuccess(false);
             result.setCode("102");
-            result.setCode("发布失败!请稍后再试");
+            result.setMessage("发布失败!请稍后再试");
             return result;
         }
     }

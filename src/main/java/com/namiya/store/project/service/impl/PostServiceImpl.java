@@ -25,13 +25,13 @@ public class PostServiceImpl implements PostService {
         if(post.getPostContent()==null){
             result.setSuccess(false);
             result.setCode("301");
-            result.setCode("内容不可为空!");
+            result.setMessage("内容不可为空!");
             return result;
         }
         if(post.getPostTitle()==null){
             result.setSuccess(false);
             result.setCode("301");
-            result.setCode("标题不可为空!");
+            result.setMessage("标题不可为空!");
             return result;
         }
         PostDO postDO=new PostDO(post);
@@ -45,7 +45,7 @@ public class PostServiceImpl implements PostService {
         else{
             result.setSuccess(false);
             result.setCode("302");
-            result.setCode("发布失败!请稍后再试");
+            result.setMessage("发布失败!请稍后再试");
             return result;
         }
 
