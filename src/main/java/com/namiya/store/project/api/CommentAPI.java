@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,8 +27,9 @@ public class CommentAPI {
     @PostMapping("/publish")
     @ResponseBody
     @Operation(summary = "发布评论",description = "要求前端提供评论内容,评论标题,评论发布的用户,将评论储存到服务器中")
-    Result<Comment> publish(@Parameter(description = "要求提供评论内容,标题,发布用户") Comment comment){
-        return commentService.publish(comment);
+    Result<Comment> publish(@Parameter(description = "要求提供评论内容,标题,发布用户") Comment comment,
+                            @Parameter(description = "可以选择是否添加图片",required = false) MultipartFile image){
+        return image==null? commentService.publish(comment) : commentService.publish(comment,image);
     }
     @GetMapping("/getAll")
     @ResponseBody
@@ -53,8 +55,9 @@ public class CommentAPI {
     @PostMapping("/update")
     @ResponseBody
     @Operation(summary = "更改评论",description = "根据评论id更改评论的内容,标题,热度,是否最佳")
-    Result<Integer> update(@Parameter(description = "评论更改的model,必须含有id,可更改热度,最佳评论...")Comment comment){
-        return commentService.update(comment);
+    Result<Integer> update(@Parameter(description = "评论更改的model,必须含有id,可更改热度,最佳评论...")Comment comment,
+                           @Parameter(description = "可以选择是否添加图片",required = false)MultipartFile image){
+        return image==null? commentService.update(comment) : commentService.update(comment,image);
     }
     @GetMapping("/getComment")
     @ResponseBody

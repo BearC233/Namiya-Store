@@ -15,12 +15,14 @@ public class PostDO {
     private String postContent;
     private String tags;
     private int solved;
+    private String img;
     private LocalDateTime gmtCreated;
     private LocalDateTime gmtModified;
     private int anonymous;
     public PostDO(){}
     public PostDO(Post Post){
         this.postId=Post.getPostId();
+        this.img=Post.getImg();
         this.postTitle=Post.getPostTitle();
         this.postPublisher=Post.getPostPublisher();
         this.postContent=Post.getPostContent();
@@ -34,6 +36,7 @@ public class PostDO {
     public Post toModel(){
         Post Post = new Post();
         Post.setPostTitle(this.postTitle);
+        Post.setImg(this.img);
         Post.setPostPublisher(this.postPublisher);
         Post.setPostContent(this.postContent);
         Post.setPostHeat(this.postHeat);

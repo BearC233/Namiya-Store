@@ -9,10 +9,13 @@ import com.namiya.store.project.model.Post;
 import com.namiya.store.project.model.Result;
 import com.namiya.store.project.model.User;
 import com.namiya.store.project.service.CommentService;
+import com.namiya.store.project.service.FileStorageService;
 import com.namiya.store.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +25,8 @@ public class CommentServiceImpl implements CommentService {
     CommentDAO commentDAO;
     @Autowired
     UserService userService;
+    @Autowired
+    FileStorageService fileStorageService;
     @Override
     public Result<Comment> publish(Comment comment) {
         Result<Comment> result = new Result<>();
@@ -31,7 +36,45 @@ public class CommentServiceImpl implements CommentService {
             result.setMessage("内容不可为空!");
             return result;
         }
+        CommentDO commentDO=new CommentDO(comment);
+        int insert = commentDAO.insert(commentDO);
+        if(insert>0){
+            result.setData(comment);
+            result.setSuccess(true);
+            result.setMessage("发布成功!");
+            return result;
+        }
+        else{
+            result.setSuccess(false);
+            result.setCode("102");
+            result.setMessage("发布失败!请稍后再试");
+            return result;
+        }
+    }
 
+    @Override
+    public Result<Comment> publish(Comment comment, MultipartFile image) {
+        Result<Comment> result = new Result<>();
+        if(!isImage(image)){
+            result.setSuccess(false);
+            result.setCode("105");
+            result.setMessage("不支持非图片格式!");
+            return result;
+        }
+        if(comment.getCommentContent()==null){
+            result.setSuccess(false);
+            result.setCode("101");
+            result.setMessage("内容不可为空!");
+            return result;
+        }
+        try {
+            comment.setImg(fileStorageService.storeFile(image));
+        } catch (IOException e) {
+            result.setSuccess(false);
+            result.setCode("106");
+            result.setMessage("图片上传失败!");
+            return result;
+        }
         CommentDO commentDO=new CommentDO(comment);
         int insert = commentDAO.insert(commentDO);
         if(insert>0){
@@ -146,5 +189,49 @@ public class CommentServiceImpl implements CommentService {
             result.setData(update);
             return result;
         }
+    }
+
+    @Override
+    public Result<Integer> update(Comment comment, MultipartFile image) {
+        Result<Integer> result=new Result<>();
+        if(!isImage(image)){
+            result.setSuccess(false);
+            result.setCode("105");
+            result.setMessage("不支持非图片格式!");
+            return result;
+        }
+        if(comment.getCommentId()==null){
+            result.setSuccess(false);
+            result.setCode("101");
+            result.setMessage("无帖子id!");
+            return result;
+        }
+        try {
+            comment.setImg(fileStorageService.storeFile(image));
+        } catch (IOException e) {
+            result.setSuccess(false);
+            result.setCode("106");
+            result.setMessage("图片上传失败!");
+            return result;
+        }
+        int update = commentDAO.update(new CommentDO(comment));
+        if(update==0) {
+
+            result.setSuccess(false);
+            result.setMessage("更新失败!");
+            result.setCode("102");
+            return result;
+        }
+        else{
+            result.setData(update);
+            result.setSuccess(true);
+            result.setData(update);
+            return result;
+        }
+    }
+
+    private boolean isImage(MultipartFile file){
+        String contentType=file.getContentType();
+        return contentType!=null&&contentType.startsWith("image/");
     }
 }

@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,8 +25,9 @@ public class PostAPI {
     @PostMapping("/publish")
     @ResponseBody
     @Operation(summary = "发布帖子",description = "要求前端提供帖子内容,帖子标题,帖子标签和帖子发布的用户,将帖子储存到服务器中")
-    Result<Post> publish(@Parameter(description = "要求提供帖子内容,标题,发布用户,标签")Post post){
-        return postService.publish(post);
+    Result<Post> publish(@Parameter(description = "要求提供帖子内容,标题,发布用户,标签")Post post,
+                         @Parameter(description = "可以选择是否添加图片",required = false) MultipartFile image){
+        return image==null?postService.publish(post):postService.publish(post,image);
     }
     @GetMapping("/getAll")
     @ResponseBody
@@ -51,8 +53,9 @@ public class PostAPI {
     @PostMapping("/update")
     @ResponseBody
     @Operation(summary = "更改帖子",description = "根据帖子id更改帖子的内容,标题,热度标签,是否解决")
-    Result<Integer> update(@Parameter(description = "帖子更改的model,必须含有id,可更改热度,标签...")Post post){
-        return postService.update(post);
+    Result<Integer> update(@Parameter(description = "帖子更改的model,必须含有id,可更改热度,标签...")Post post,
+                           @Parameter(description = "可以选择是否添加图片",required = false)MultipartFile image){
+        return image==null?postService.update(post):postService.update(post,image);
     }
     @GetMapping("/getPost")
     @ResponseBody

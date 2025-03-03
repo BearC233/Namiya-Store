@@ -11,10 +11,19 @@ public class Comment implements Serializable {
     private String commentUser;
     private String commentContent;
     private int best;
+    private String img;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime gmtCreated;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime gmtModified;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public LocalDateTime getGmtCreated() {
         return gmtCreated;

@@ -7,6 +7,7 @@
         <id column="capsule_id" property="capsuleId"/>
         <result column="capsule_end" property="capsuleEnd"/>
         <result column="status" property="status"/>
+        <result column="img" property="img"/>
         <result column="capsule_user" property="capsuleUser"/>
         <result column="capsule_content" property="capsuleContent"/>
         <result column="gmt_created" property="gmtCreated"/>
@@ -17,6 +18,7 @@
         <id column="capsule_id" property="capsuleId"/>
         <result column="capsule_end" property="capsuleEnd"/>
         <result column="status" property="status"/>
+        <result column="img" property="img"/>
         <result column="capsule_user" property="capsuleUser"/>
         <result column="capsule_content" property="capsuleContent"/>
         <result column="gmt_created" property="gmtCreated"/>
@@ -26,8 +28,8 @@
 
     <insert id="insert" parameterType="com.namiya.store.project.model.Capsule"
             keyProperty="capsule_id">
-        INSERT INTO capsule (capsule_id,capsule_user,capsule_content,capsule_end,status,gmt_created,gmt_modified)
-        VALUES(#{capsuleId},#{capsuleUser}, #{capsuleContent}, #{capsuleEnd}, #{status},now(),now())
+        INSERT INTO capsule (capsule_id,capsule_user,capsule_content,capsule_end,status,img,gmt_created,gmt_modified)
+        VALUES(#{capsuleId},#{capsuleUser}, #{capsuleContent}, #{capsuleEnd}, #{status},#{img},now(),now())
     </insert>
 
     <update id="update" parameterType="com.namiya.store.project.model.Capsule">

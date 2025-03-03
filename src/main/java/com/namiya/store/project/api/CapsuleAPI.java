@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("/capsule/api")
 @Controller
@@ -22,8 +23,9 @@ public class CapsuleAPI {
     @PostMapping("/publish")
     @ResponseBody
     @Operation(summary = "创建时间胶囊",description = "要求前端提供胶囊内容,创建用户,胶囊过期时间,将胶囊储存到服务器中,由于每10分钟检查一次是否过期,尽量设置为30的倍数")
-    Result<Capsule> publish(@Parameter(description = "要求提供胶囊内容,胶囊过期时间(localdatetime),创建用户") Capsule capsule){
-        return capsuleService.create(capsule);
+    Result<Capsule> publish(@Parameter(description = "要求提供胶囊内容,胶囊过期时间(localdatetime),创建用户") Capsule capsule,
+                            @Parameter(description = "可以选择是否添加图片",required = false) MultipartFile image){
+        return image==null?capsuleService.create(capsule):capsuleService.create(capsule,image);
     }
     @PostMapping("/del")
     @ResponseBody

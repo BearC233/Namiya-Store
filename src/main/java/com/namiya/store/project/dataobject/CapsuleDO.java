@@ -13,6 +13,7 @@ public class CapsuleDO implements Serializable {
     private LocalDateTime gmtCreated;
     private LocalDateTime gmtModified;
     private Status Status;
+    private String img;
     public CapsuleDO(){}
     public CapsuleDO(Capsule capsule){
         this.capsuleId=capsule.getCapsuleId();
@@ -22,6 +23,7 @@ public class CapsuleDO implements Serializable {
         this.gmtCreated=capsule.getGmtCreated();
         this.gmtModified=capsule.getGmtModified();
         this.Status=capsule.getStatus();
+        this.img=capsule.getImg();
     }
 
     public com.namiya.store.project.model.Status getStatus() {
@@ -30,6 +32,14 @@ public class CapsuleDO implements Serializable {
 
     public void setStatus(com.namiya.store.project.model.Status status) {
         Status = status;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public Capsule toModel(){
@@ -41,6 +51,7 @@ public class CapsuleDO implements Serializable {
         capsule.setGmtCreated(this.gmtCreated);
         capsule.setGmtModified(this.gmtModified);
         capsule.setStatus(this.Status);
+        capsule.setImg(this.img);
         return capsule;
     }
     public String getCapsuleContent() {

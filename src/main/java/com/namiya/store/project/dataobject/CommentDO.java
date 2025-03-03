@@ -10,15 +10,18 @@ public class CommentDO {
     private int commentHeat;
     private String commentUser;
     private String commentContent;
+    private String img;
     private int best;
     private LocalDateTime gmtCreated;
     private LocalDateTime gmtModified;
+
     public CommentDO(){}
     public CommentDO(Comment comment){
         this.commentId=comment.getCommentId();
         this.commentUser=comment.getCommentUser();
         this.commentContent=comment.getCommentContent();
         this.best=comment.getBest();
+        this.img=comment.getImg();
         this.commentHeat=comment.getCommentHeat();
         this.gmtCreated=comment.getGmtCreated();
         this.gmtModified=comment.getGmtModified();
@@ -29,6 +32,7 @@ public class CommentDO {
         Comment.setCommentContent(this.commentContent);
         Comment.setCommentHeat(this.commentHeat);
         Comment.setBest(this.best);
+        Comment.setImg(this.img);
         Comment.setCommentId(this.commentId);
         Comment.setGmtCreated(this.gmtCreated);
         Comment.setGmtModified(this.gmtModified);
