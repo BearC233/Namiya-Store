@@ -15,10 +15,20 @@ public class Post implements Serializable {
     private String postContent;
     private String tags;
     private int solved;
+    private int anonymous;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime gmtCreated;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime gmtModified;
+
+    public int getAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(int anonymous) {
+        this.anonymous = anonymous;
+    }
 
     public String getPostTitle() {
         return postTitle;

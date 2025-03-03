@@ -17,6 +17,7 @@ public class PostDO {
     private int solved;
     private LocalDateTime gmtCreated;
     private LocalDateTime gmtModified;
+    private int anonymous;
     public PostDO(){}
     public PostDO(Post Post){
         this.postId=Post.getPostId();
@@ -28,6 +29,7 @@ public class PostDO {
         this.postHeat=Post.getPostHeat();
         this.gmtCreated=Post.getGmtCreated();
         this.gmtModified=Post.getGmtModified();
+        this.anonymous=Post.getAnonymous();
     }
     public Post toModel(){
         Post Post = new Post();
@@ -40,7 +42,16 @@ public class PostDO {
         Post.setPostId(this.postId);
         Post.setGmtCreated(this.gmtCreated);
         Post.setGmtModified(this.gmtModified);
+        Post.setAnonymous(this.anonymous);
         return Post;
+    }
+
+    public int getAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(int anonymous) {
+        this.anonymous = anonymous;
     }
 
     public String getPostTitle() {

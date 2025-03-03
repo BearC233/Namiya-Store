@@ -46,4 +46,11 @@ public class OpenApiConfig {
                 .pathsToMatch("/capsule/api/**")
                 .build();
     }
+    @Bean
+    public GroupedOpenApi commentApi() {
+        return GroupedOpenApi.builder()
+                .group("comment-api")
+                .pathsToMatch("/comment/api/**")
+                .build();
+    }
 }
