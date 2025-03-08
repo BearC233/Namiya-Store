@@ -53,4 +53,11 @@ public class OpenApiConfig {
                 .pathsToMatch("/comment/api/**")
                 .build();
     }
+    @Bean
+    public GroupedOpenApi deepSeekApi() {
+        return GroupedOpenApi.builder()
+                .group("deepSeek-api")
+                .pathsToMatch("/deepSeek/**")
+                .build();
+    }
 }

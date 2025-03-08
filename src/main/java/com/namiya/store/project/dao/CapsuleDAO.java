@@ -12,7 +12,6 @@ public interface CapsuleDAO {
     List<CapsuleDO> findAll();
 
     int insert(CapsuleDO capsuleDO);
-
     int update(CapsuleDO capsuleDO);
 
     int delete(@Param("capsuleId") String capsuleId);
