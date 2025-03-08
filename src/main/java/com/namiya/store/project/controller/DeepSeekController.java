@@ -14,14 +14,13 @@ import java.util.List;
 @RequestMapping("/deepSeek")
 @Controller
 public class DeepSeekController {
-    private List<String> 
     @PostMapping("/chat")
     @ResponseBody
     public Result<String> chat(String question){
         Result<String> result = new Result<>();
         try {
             HttpResponse<String> response = Unirest.post("https://api.siliconflow.cn/v1/chat/completions")
-                    .header("Authorization", "Bearer sk-goynobkupvvjigtjkhzgdgplcmttrjthfpvhndgbfsgxkpvb")
+                    .header("Authorization", "Bearer guess")
                     .header("Content-Type", "application/json")
                     .body("{\n" +
                             "  \"model\": \"deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B\",\n" +
